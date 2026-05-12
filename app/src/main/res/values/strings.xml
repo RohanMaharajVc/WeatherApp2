@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">WeatherApp</string>
+    <string name="welcome_to_weatherway">Welcome to WeatherWay</string>
+    <string name="start">Start</string>
+    <string name="exit">Exit</string>
+    <string name="created_by_rohan_maharaj_st10484484">Created by Rohan Maharaj: ST10484484</string>
 </resources>

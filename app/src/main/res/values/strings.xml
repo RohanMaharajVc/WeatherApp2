@@ -4,4 +4,13 @@
     <string name="start">Start</string>
     <string name="exit">Exit</string>
     <string name="created_by_rohan_maharaj_st10484484">Created by Rohan Maharaj: ST10484484</string>
+    <string name="weekly_weather_input">Weekly Weather Input</string>
+    <string name="minimum_tempreture_e_g_25">Minimum Tempreture (E.g 25)</string>
+    <string name="maximum_tempreture_e_g_35">Maximum Tempreture (E.g 35)</string>
+    <string name="weather_condition_e_g_sunny">Weather Condition (E.g Sunny)</string>
+    <string name="save_weather">Save Weather</string>
+    <string name="calculate_average">Calculate Average</string>
+    <string name="average_tempreture">Average Tempreture</string>
+    <string name="view_detailed_weather">View detailed Weather</string>
+    <string name="clear_data">Clear Data</string>
 </resources>

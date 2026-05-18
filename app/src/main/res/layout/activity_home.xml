@@ -67,7 +67,7 @@
         app:layout_constraintVertical_bias="0.029" />
 
     <EditText
-        android:id="@+id/edtWeatherCondiotion"
+        android:id="@+id/edtWeatherCondition"
         android:layout_width="381dp"
         android:layout_height="48dp"
         android:ems="10"

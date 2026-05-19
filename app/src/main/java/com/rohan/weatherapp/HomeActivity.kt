@@ -150,7 +150,6 @@ class HomeActivity : AppCompatActivity() {
     private fun calculateAverageTempreture(){
         //calculating the average weekly minimum tempreture
 
-
         //ensure that all the days temp is there before we calculate
         if(!allDataEntered()) {
             Toast.makeText(
@@ -176,7 +175,21 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
+
     //checks if all days have data entered
+    private fun allDataEntered() : Boolean{
+
+        for (day in weeklyWeather){
+
+            //returns false if any day is incomplete
+            if(!day.dataCaptured){
+                return false
+            }
+        }
+
+        return true
+    }
+
 
 
     private fun clearData(){}

@@ -147,7 +147,36 @@ class HomeActivity : AppCompatActivity() {
     }
 
 
-    private fun calculateAverageTempreture(){}
+    private fun calculateAverageTempreture(){
+        //calculating the average weekly minimum tempreture
+
+
+        //ensure that all the days temp is there before we calculate
+        if(!allDataEntered()) {
+            Toast.makeText(
+                this, "Please enter all the data for the  7 days before calculating",
+                Toast.LENGTH_SHORT
+            ).show()
+
+            return
+        }
+
+        var total = 0
+
+        //add all the maximum tempretures together
+        for(day in weeklyWeather){
+            total += day.maxTempreture
+        }
+
+        //calculate the average
+        val average = total / weeklyWeather.size.toDouble()
+
+        //display the average temp
+        tvAverage.text = "Average Tempreture: %.1C".format(average)
+
+    }
+
+    //checks if all days have data entered
 
 
     private fun clearData(){}

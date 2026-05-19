@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -39,8 +40,7 @@ class HomeActivity : AppCompatActivity() {
 
     )
 
-    //track which days the user selected from the spinner
-    private var selectedDayIndex = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,7 +64,7 @@ class HomeActivity : AppCompatActivity() {
         val dayNames = weeklyWeather.map { it.dayName }
 
         //creates spinner adapter for day selection
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item,dayNames)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
 
@@ -95,7 +95,56 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveWeatherData(){}
+    private fun saveWeatherData(){
+
+        // Gets the selected spinner position
+        val selectedDayIndex = spinner.selectedItemPosition
+
+        val minText = edtMinTemp.text.toString()
+        val maxText = edtMaxTemp.text.toString()
+        val condition = edtWeatherCondition.text.toString()
+
+        //Error handling to make sure all input fields are completed
+        if(minText.isEmpty() || maxText.isEmpty() || condition.isEmpty()){
+            Toast.makeText(this, "Please complete all the fields!", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+
+        val minTemp = minText.toIntOrNull()
+        val maxTemp = maxText.toIntOrNull()
+
+        //ensures Temperatures are valid numeric values
+        if(minTemp == null || maxTemp == null){
+            Toast.makeText(this, "Temperatures must be valid numbers", Toast.LENGTH_SHORT).show()
+            return
+        }
+        
+        //ensure that there is a logical Temperatures input
+        if(minTemp > maxTemp){
+            Toast.makeText(this, "Minimum temperature cannot be greater than the maximum temperature", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        //store the data into the selected weatherDay object
+        weeklyWeather[selectedDayIndex].minTempreture = minTemp
+
+        weeklyWeather[selectedDayIndex].maxTempreture = maxTemp
+
+        weeklyWeather[selectedDayIndex].weatherCondition = condition
+
+        weeklyWeather[selectedDayIndex].dataCaptured = true
+
+        //Confirms that the selected days data has been saved
+        Toast.makeText(this, "${weeklyWeather[selectedDayIndex].dayName} weather saved", Toast.LENGTH_SHORT).show()
+
+        //clear fields for the next entry
+        edtMinTemp.text.clear()
+        edtMaxTemp.text.clear()
+        edtWeatherCondition.text.clear()
+
+
+    }
 
 
     private fun calculateAverageTempreture(){}

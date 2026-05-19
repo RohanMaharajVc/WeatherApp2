@@ -6,7 +6,7 @@ data class WeatherDay(
     val dayName: String,
 
     //Store minimum tempreture
-    val minTempreture: Int = 0,
+    var minTempreture: Int = 0,
 
     //Store our maximum temp
     var maxTempreture: Int = 0,

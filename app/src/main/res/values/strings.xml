@@ -13,4 +13,7 @@
     <string name="average_tempreture">Average Tempreture</string>
     <string name="view_detailed_weather">View detailed Weather</string>
     <string name="clear_data">Clear Data</string>
+    <string name="detailed_weekly_weather">Detailed Weekly Weather</string>
+    <string name="weather_details_will_appear_here">Weather details will appear here</string>
+    <string name="back_to_main_screen">Back to Main Screen</string>
 </resources>

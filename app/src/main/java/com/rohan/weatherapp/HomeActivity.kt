@@ -1,5 +1,6 @@
 package com.rohan.weatherapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -29,16 +30,18 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var tvAverage: TextView
 
     // Array of WeatherDay objects used to store all the weekly weather data
-    private val weeklyWeather = arrayOf(
-        WeatherDay("Monday"),
-        WeatherDay("Tuesday"),
-        WeatherDay("Wednesday"),
-        WeatherDay("Thursday"),
-        WeatherDay("Friday"),
-        WeatherDay("Saturday"),
-        WeatherDay("Sunday")
+    companion object {
 
-    )
+        val weatherArray = arrayOf(
+            WeatherDay("Monday"),
+            WeatherDay("Tuesday"),
+            WeatherDay("Wednesday"),
+            WeatherDay("Thursday"),
+            WeatherDay("Friday"),
+            WeatherDay("Saturday"),
+            WeatherDay("Sunday")
+        )
+    }
 
 
 
@@ -61,7 +64,7 @@ class HomeActivity : AppCompatActivity() {
         tvAverage = findViewById(R.id.tvAverage)
 
         //Extract day names from the WeatherDay objects for the spinner
-        val dayNames = weeklyWeather.map { it.dayName }
+        val dayNames = weatherArray.map { it.dayName }
 
         //creates spinner adapter for day selection
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item,dayNames)
@@ -86,6 +89,12 @@ class HomeActivity : AppCompatActivity() {
         //exits the app
         btnExit.setOnClickListener {
             finishAffinity()
+        }
+
+        btnDetailedScreen.setOnClickListener {
+            val intent = Intent(this, DetailedScreenActivity::class.java)
+            startActivity(intent)
+            finish()
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -127,16 +136,16 @@ class HomeActivity : AppCompatActivity() {
         }
 
         //store the data into the selected weatherDay object
-        weeklyWeather[selectedDayIndex].minTempreture = minTemp
+        weatherArray[selectedDayIndex].minTempreture = minTemp
 
-        weeklyWeather[selectedDayIndex].maxTempreture = maxTemp
+        weatherArray[selectedDayIndex].maxTempreture = maxTemp
 
-        weeklyWeather[selectedDayIndex].weatherCondition = condition
+        weatherArray[selectedDayIndex].weatherCondition = condition
 
-        weeklyWeather[selectedDayIndex].dataCaptured = true
+        weatherArray[selectedDayIndex].dataCaptured = true
 
         //Confirms that the selected days data has been saved
-        Toast.makeText(this, "${weeklyWeather[selectedDayIndex].dayName} weather saved", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "${weatherArray[selectedDayIndex].dayName} weather saved", Toast.LENGTH_SHORT).show()
 
         //clear fields for the next entry
         edtMinTemp.text.clear()
@@ -163,23 +172,22 @@ class HomeActivity : AppCompatActivity() {
         var total = 0
 
         //add all the maximum tempretures together
-        for(day in weeklyWeather){
+        for(day in weatherArray){
             total += day.maxTempreture
         }
 
         //calculate the average
-        val average = total / weeklyWeather.size.toDouble()
+        val average = total / weatherArray.size.toDouble()
 
         //display the average temp
-        tvAverage.text = "Average Tempreture: %.1C".format(average)
-
+        tvAverage.text = "Average Temperature: %.1f°C".format(average)
     }
 
 
     //checks if all days have data entered
     private fun allDataEntered() : Boolean{
 
-        for (day in weeklyWeather){
+        for (day in weatherArray){
 
             //returns false if any day is incomplete
             if(!day.dataCaptured){
@@ -192,6 +200,30 @@ class HomeActivity : AppCompatActivity() {
 
 
 
-    private fun clearData(){}
+    private fun clearData(){
+        // Resets every WeatherDay object
+        for(day in weatherArray){
+
+            day.minTempreture = 0
+            day.maxTempreture = 0
+            day.weatherCondition = ""
+            day.dataCaptured = false
+        }
+
+        // Clears all input fields
+        edtMinTemp.text.clear()
+        edtMaxTemp.text.clear()
+        edtWeatherCondition.text.clear()
+
+        // Resets average temperature display
+        tvAverage.text = "Average Temperature:"
+
+        // Displays confirmation message
+        Toast.makeText(
+            this,
+            "All weather data has been cleared",
+            Toast.LENGTH_SHORT
+        ).show()
+    }
 
 }
